@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kandula Sreeja-Frontend web developer&Web Designer</title>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- HERO -->
+    <div class="hero">
+      <div class="logo">
+        <img src="logo.png" alt="Logo" />
+      </div>
+
+      <video id="heroVideo" playsinline muted autoplay loop>
+        <source src="car-dropby.mp4" type="video/mp4" />
+      </video>
+
+      <div class="floating-text bubble" id="gotStuckText">
+        <span class="sweep-text">
+          Did your code hit a dead end or your design get stuck in traffic?
+        </span>
+      </div>
+
+      <div class="floating-text bubble" id="fixItText">
+        <span class="sweep-text">Let’s get your ideas back on the road.</span>
+      </div>
+    </div>
+
+    <div class="hero-arrow">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path
+          d="M12 5v14m0 0l-7-7m7 7l7-7"
+          stroke="currentColor"
+          stroke-width="2"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </div>
+
+    <!-- ROADMAP -->
+    <section class="work-roadmap" id="workRoadmap">
+      <div class="road" id="road">
+        <span class="lane"></span>
+
+        <!-- Description Box -->
+        <div class="description-box" id="descriptionBox">
+          <p id="descText">Select a pin to see description...</p>
+        </div>
+
+        <!-- Car -->
+        <svg class="road-car" id="roadCar" viewBox="0 0 200 100">
+          <path d="M20 70 Q35 35, 70 35 H130 Q165 35, 180 70 Z" fill="#e63946" stroke="#111" stroke-width="3" />
+          <path d="M65 35 Q85 15, 115 15 Q135 15, 135 35 Z" fill="#dcefff" stroke="#111" stroke-width="2" />
+          <circle cx="55" cy="75" r="12" fill="#1d3557" stroke="#333" stroke-width="3" />
+          <circle cx="145" cy="75" r="12" fill="#1d3557" stroke="#333" stroke-width="3" />
+          <circle cx="55" cy="75" r="5" fill="#ddd" />
+          <circle cx="145" cy="75" r="5" fill="#ddd" />
+        </svg>
+
+        <!-- Pins -->
+        <button class="pin" style="--i:1; --pin-color:#ff007f;">
+          <div class="teardrop"></div>
+          <span class="label">About</span>
+        </button>
+
+        <button class="pin" style="--i:2; --pin-color:#00ff7f;">
+          <div class="teardrop"></div>
+          <span class="label">Skills</span>
+        </button>
+
+        <button class="pin" style="--i:3; --pin-color:#ffbf00;">
+          <div class="teardrop"></div>
+          <span class="label">Projects</span>
+        </button>
+
+        <button class="pin" style="--i:4; --pin-color:#00bfff;">
+          <div class="teardrop"></div>
+          <span class="label">Tools</span>
+        </button>
+
+        <button class="pin" style="--i:5; --pin-color:#ff00ff;">
+          <div class="teardrop"></div>
+          <span class="label">Contact</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="about-section">
+      <div class="about-overlay">
+        <h2>About Me</h2>
+          <h3 class="about-subtitle">
+      <span>Frontend Developer</span> & <span>Creative Web Designer</span>
+    </h3>
+        <p>
+          I’m a Frontend Developer and Web Designer who blends creativity with code to build meaningful
+          digital experiences. With a sharp eye for design and a deep love for problem-solving, I craft
+          responsive, engaging, and visually striking websites that connect ideas with people. My goal is
+          simple — to turn complex concepts into clean, functional, and inspiring web experiences that
+          leave a lasting impression.
+        </p>
+        <a href="resume.pdf" target="_blank" class="resume-btn">View Resume →</a>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="skills-section">
+      <canvas id="sparkleCanvas"></canvas>
+      <h1 class="skills-heading">Skills</h1>
+
+      <div class="bracket-container" id="bracketContainer">
+        <span class="bracket left">{</span>
+
+        <div class="skills-container" id="skillsContainer">
+          <div
+            class="skill"
+            data-desc="I use HTML to build strong, semantic foundations for websites. 
+            Every page is structured for clarity and accessibility. 
+            My code ensures smooth user navigation and search engine optimization. 
+            I focus on writing clean, maintainable markup for any project."
+          >
+            <i class="fab fa-html5"></i>
+            <p>HTML</p>
+          </div>
+
+          <div
+            class="skill"
+            data-desc="With CSS, I design visually appealing and responsive layouts. 
+            I combine Flexbox, Grid, and animations for modern interfaces. 
+            My styles enhance usability across devices and screen sizes. 
+            I focus on clean, reusable, and scalable CSS for maintainable projects."
+          >
+            <i class="fab fa-css3-alt"></i>
+            <p>CSS</p>
+          </div>
+
+          <div
+            class="skill"
+            data-desc="JavaScript brings interactivity and logic to my web projects. 
+            I handle events, DOM manipulation, and dynamic content efficiently. 
+            I write clean, readable code that is easy to maintain. 
+            My goal is engaging, smooth, and responsive user experiences."
+          >
+            <i class="fab fa-js"></i>
+            <p>JavaScript</p>
+          </div>
+
+          <div
+            class="skill"
+            data-desc="React allows me to build scalable, component-based applications. 
+            I use hooks and state management for responsive interfaces. 
+            I focus on reusable components and maintainable code structure. 
+            My React apps are modern, dynamic, and performance-optimized."
+          >
+            <i class="fab fa-react"></i>
+            <p>React</p>
+          </div>
+        </div>
+
+        <span class="bracket right">}</span>
+      </div>
+
+      <div id="skillDescription" class="skill-description"></div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="projects-section" id="projects">
+      <h1>Projects</h1>
+
+      <div class="projects-container">
+        <!-- Project 1 -->
+        <div class="project-card">
+          <div class="project-slider">
+            <img src="project1-1.png" alt="Project 1 Screenshot 1" class="active" />
+            <img src="project1-2.png" alt="Project 1 Screenshot 2" />
+          </div>
+
+          <div class="project-info">
+            <h3>Fitness Website</h3>
+            <p>A fitness website designed to showcase programs, benefits, and pricing for health enthusiasts.</p>
+            <div class="project-links">
+              <a href="https://dreamfitness71febf.netlify.app/" target="_blank">
+                <i class="fas fa-external-link-alt"></i> Live
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card">
+          <div class="project-slider">
+            <img src="project2-1.png" alt="Project 2 Screenshot 1" class="active" />
+            <img src="project2-2.png" alt="Project 2 Screenshot 2" />
+          </div>
+
+          <div class="project-info">
+            <h3>Coffee Shop Website</h3>
+            <p>A web project built to highlight handcrafted coffee selections and café vibes.</p>
+            <div class="project-links">
+              <a href="https://bloomnbean-375541.netlify.app/" target="_blank">
+                <i class="fas fa-external-link-alt"></i> Live
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOOLS -->
+    <section class="tools-section" id="tools">
+      <h1>Tools I Use</h1>
+      <p>Here are the tools I use to design, develop, and create amazing projects:</p>
+
+      <div class="tools-container">
+        <div class="tool-card">
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg"
+            alt="Figma"
+          />
+          <p>Figma</p>
+        </div>
+
+        <div class="tool-card">
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/canva/canva-original.svg"
+            alt="Canva"
+          />
+          <p>Canva</p>
+        </div>
+
+        <div class="tool-card">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg"
+            alt="ChatGPT"
+          />
+          <p>ChatGPT</p>
+        </div>
+
+        <div class="tool-card">
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg"
+            alt="VS Code"
+          />
+          <p>VS Code</p>
+        </div>
+
+        <div class="tool-card">
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
+            alt="GitHub"
+          />
+          <p>GitHub</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact-section" id="contact">
+      <canvas id="particlesCanvas"></canvas>
+
+      <div class="contact-card">
+        <h2>Get in Touch</h2>
+        <p class="contact-text">
+          Have a project idea or want to collaborate?<br />
+          Let’s connect and make something creative together!
+        </p>
+
+        <form
+          action="https://formspree.io/f/mqagqvzk"
+          method="POST"
+          class="contact-form"
+        >
+          <input type="text" name="name" placeholder="Your Name" required />
+          <input type="email" name="email" placeholder="Your Email" required />
+          <textarea name="message" rows="3" placeholder="Your Message" required></textarea>
+          <button type="submit">Send Message</button>
+          <p class="form-status"></p>
+        </form>
+
+        <div class="social-icons">
+          <a href="https://github.com/" target="_blank"><i class="fab fa-github"></i></a>
+          <a href="https://linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="mailto:kandulasreeja@gmail.com"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCRIPT -->
+    <script src="script.js"></script>
+  </body>
+</html>

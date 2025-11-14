@@ -1,0 +1,1374 @@
+
+/* =======================================================
+   Optimized style.css
+   - Full responsive behavior
+   - Mobile animation/perf reductions
+   - Preserves all colors, fonts & visual style
+   ======================================================= */
+
+/* === GLOBAL RESET & VARIABLES === */
+:root {
+  --font-main: 'Anta', sans-serif;
+  --color-bg: #000;
+  --color-text: #fff;
+  --color-accent: #22e3ff;
+  --color-road: #3a3636;
+  --color-pin: #007bff;
+  --box-radius: 15px;
+  --transition-fast: 0.3s ease;
+  --transition-med: 0.4s ease;
+  --max-content-width: 1200px;
+  --container-padding: 20px;
+}
+
+/* Basic reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-main);
+  background: var(--color-bg);
+  color: var(--color-text);
+  scroll-behavior: smooth;
+  /* do not block scrolling — previously overflow: hidden caused issues */
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Small text / button defaults */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button {
+  font-family: inherit;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+/* === HERO SECTION === */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+}
+
+/* Logo */
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 40;
+}
+.logo img {
+  width: 100px;
+  max-width: 24vw;
+  height: auto;
+  display: block;
+}
+
+/* Video background (cover) */
+.hero video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+/* Floating bubbles / texts */
+.bubble {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  padding: 15px 30px;
+  text-align: center;
+  font-weight: 700;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 15;
+  white-space: nowrap;
+}
+.bubble.show {
+  opacity: 1;
+}
+
+/* Stylish sweep text */
+.sweep-text {
+  font-size: 28px;
+  font-weight: 800;
+  background: linear-gradient(90deg, #fff, #200094, #fff, #200094, #fff);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: sweep 2s linear infinite;
+  will-change: background-position;
+}
+
+/* Keyframes for hero text */
+@keyframes sweep {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}
+@keyframes fadeInText {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+@keyframes fadeOutText {
+  from {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+}
+@keyframes fadeOutRight {
+  from {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate(50%, 0);
+  }
+}
+
+/* Down arrow (hero) */
+.hero-arrow {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  animation: bounceArrow 2s infinite;
+  cursor: pointer;
+  color: #0ff;
+  filter: drop-shadow(0 0 6px #0ff) drop-shadow(0 0 12px #0ff);
+}
+.hero-arrow svg {
+  width: 36px;
+  height: 36px;
+  display: block;
+}
+
+@keyframes bounceArrow {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-12px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-6px);
+  }
+}
+.hero-arrow:hover {
+  filter: drop-shadow(0 0 8px #0ff) drop-shadow(0 0 18px #0ff);
+  transform: translateX(-50%) translateY(-3px);
+}
+
+/* === ROADMAP SECTION === */
+.work-roadmap {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px var(--container-padding);
+  width: 100%;
+  /* Gradient background retained exactly */
+  background: linear-gradient(135deg, #0b0b0b, #313131, #12253a, #566d97);
+  background-size: 400% 400%;
+  animation: gradientShift 10s ease infinite;
+  overflow-x: auto;
+}
+
+/* Road container */
+.road {
+  position: relative;
+  top: -60px;
+  width: min(var(--max-content-width), 95%);
+  height: 40px;
+  background: var(--color-road);
+  border-radius: 40px;
+  box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.35);
+  margin: 0 auto;
+}
+
+/* Dotted lane */
+.road .lane {
+  position: absolute;
+  top: 50%;
+  left: 2%;
+  right: 2%;
+  height: 4px;
+  background: repeating-linear-gradient(to right, #fff 0, #fff 10px, transparent 10px, transparent 20px);
+  border-radius: 2px;
+  transform: translateY(-50%);
+}
+
+/* Road car */
+.road-car {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  width: 70px;
+  transform: translateX(0);
+  transition: transform 600ms cubic-bezier(.22, .8, .33, 1);
+  z-index: 6;
+  will-change: transform;
+}
+
+/* Pins (teardrops) - layout uses CSS variables for positioning */
+.pin {
+  --count: 5;
+  --offset: 5%;
+  --pin-color: var(--color-pin);
+  position: absolute;
+  top: -48px;
+  left: calc(var(--offset) + (var(--i) - 1) / (var(--count) - 1) * (100% - 2 * var(--offset)));
+  transform: translateX(-50%);
+  cursor: pointer;
+  text-align: center;
+  background: none;
+  border: none;
+  z-index: 8;
+  outline: none;
+}
+
+/* teardrop styling */
+.teardrop {
+  width: 18px;
+  height: 18px;
+  background: var(--pin-color);
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  margin: 0 auto;
+  box-shadow: 0 0 8px var(--pin-color), 0 0 16px var(--pin-color), 0 0 24px var(--pin-color);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  position: relative;
+}
+.teardrop::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border-radius: 50%;
+  top: 5px;
+  left: 5px;
+}
+.pin:hover .teardrop,
+.pin.active .teardrop {
+  transform: rotate(-45deg) scale(1.15);
+  box-shadow: 0 0 12px var(--pin-color), 0 0 24px var(--pin-color), 0 0 36px var(--pin-color);
+}
+.pin .label {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* Description box */
+.description-box {
+  margin: 80px auto 0;
+  width: 80%;
+  max-width: 900px;
+  padding: 20px 30px;
+  background: rgba(20, 20, 20, 0.9);
+  border-radius: var(--box-radius);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  font-size: 16px;
+  text-align: center;
+  transform: translateY(30px) scale(0.96);
+  opacity: 0;
+  transition: transform var(--transition-med), opacity var(--transition-med);
+  word-wrap: break-word;
+}
+.description-box.show {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+.description-box a {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 700;
+}
+.description-box a:hover {
+  text-decoration: underline;
+}
+
+/* === COMMON SECTION LAYOUT === */
+section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px var(--container-padding);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Center wrapper for content areas */
+.container {
+  width: min(var(--max-content-width), 96%);
+  margin: 0 auto;
+}
+
+/* === ABOUT SECTION === */
+.about-section {
+  position: relative;
+  background: url("background.png") center center / cover no-repeat;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 40px;
+  color: #fff;
+  font-family: 'Anta', sans-serif;
+  overflow: hidden;
+  text-align: center;
+}
+.about-section p {
+  max-width: 750px;              /* limits paragraph width */
+  margin: 20px auto;             /* centers text block */
+  line-height: 1.6;              /* improves readability */
+  text-align: center;            /* or left, if you prefer */
+  word-wrap: break-word;         /* avoids overflow issues */
+}
+
+/* Optional: better spacing on smaller screens */
+@media (max-width: 768px) {
+  .about-section p {
+    max-width: 90%;
+    font-size: 0.95rem;
+  }
+}
+
+.about-content {
+  max-width: 750px;
+  line-height: 1.8;
+}
+.about-content h2 {
+  font-size: 2.6rem;
+  margin-bottom: 20px;
+}
+.about-content p {
+  font-size: 1.1rem;
+}
+
+/* Glowing Resume Link */
+.resume-btn {
+  color: var(--color-accent); /* uses your cyan variable */
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  margin-left: 6px;
+}
+.resume-btn:hover,
+.resume-btn:focus {
+  text-shadow: 0 0 8px var(--color-accent), 0 0 18px var(--color-accent);
+  outline: none;
+}
+
+/* === SKILLS SECTION === */
+.skills-section {
+  position: relative;
+  background: #000;
+  overflow: hidden;
+  min-height: 100vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px var(--container-padding);
+}
+
+/* Gradient corners */
+.skills-section::before,
+.skills-section::after {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  filter: blur(150px);
+  z-index: 0;
+}
+.skills-section::before {
+  top: -100px;
+  left: -100px;
+  background: rgba(0, 191, 255, 0.5);
+}
+.skills-section::after {
+  bottom: -100px;
+  right: -100px;
+  background: rgba(0, 0, 255, 0.4);
+}
+
+/* sparkle canvas */
+#sparkleCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  display: block;
+}
+
+/* heading */
+.skills-heading {
+  color: #0ff;
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  z-index: 1;
+  position: relative;
+  text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+}
+
+/* brackets + container */
+.bracket-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 36px;
+  z-index: 1;
+  position: relative;
+}
+.bracket {
+  font-size: 7.6rem;
+  color: #0ff;
+  font-weight: 100;
+  opacity: 0.5;
+  transition: transform 1.1s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.6s ease;
+  filter: drop-shadow(0 0 12px #0ff);
+}
+.bracket.open.left {
+  transform: translateX(-60px);
+  opacity: 1;
+}
+.bracket.open.right {
+  transform: translateX(60px);
+  opacity: 1;
+}
+
+/* skills grid */
+.skills-container {
+  display: flex;
+  gap: 36px;
+  flex-wrap: wrap;
+  justify-content: center;
+  z-index: 1;
+  position: relative;
+  transition: all 0.45s ease;
+}
+
+/* individual skill */
+.skill {
+  color: #fff;
+  text-align: center;
+  font-size: 2.2rem;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.skill.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.skill i {
+  font-size: 2.8rem;
+  color: #0ff;
+  text-shadow: 0 0 8px #0ff, 0 0 15px #0ff;
+}
+.skill p {
+  font-size: 1rem;
+  margin-top: 6px;
+}
+
+/* hover and active */
+.skill:hover {
+  transform: scale(1.16);
+  transition: transform 0.28s ease;
+}
+.skill.fade {
+  opacity: 0.18;
+  transform: scale(0.88);
+}
+.skill.center {
+  transform: scale(1.6);
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  z-index: 2;
+}
+
+/* description */
+.skill-description {
+  color: #0ff;
+  font-size: 1.1rem;
+  margin-top: 26px;
+  min-height: 100px;
+  white-space: pre-wrap;
+  font-family: var(--font-main);
+  z-index: 1;
+}
+
+/* hint to compositor */
+.skill,
+.bracket,
+#roadCar,
+#sparkleCanvas {
+  will-change: transform, opacity;
+}
+
+/* === PROJECTS SECTION === */
+.projects-section {
+  position: relative;
+  padding: 40px var(--container-padding);
+  text-align: center;
+  color: #fff;
+  overflow: hidden;
+
+  /* image only */
+  background: url("projects-bg.png") center/cover no-repeat;
+  animation: moveProjectBg 60s linear infinite alternate;
+}
+
+/* gentle background motion */
+@keyframes moveProjectBg {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 50% 100%;
+  }
+  100% {
+    background-position: 100% 0%;
+  }
+}
+
+/* optional sparkle overlay */
+.projects-section::before,
+.projects-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+  background-repeat: repeat;
+  animation: floatSparkles 40s linear infinite;
+}
+.projects-section::before {
+  background-image: url("red-sparkles.png");
+  animation-duration: 55s;
+}
+.projects-section::after {
+  background-image: url("cyan-sparkles.png");
+  animation-direction: reverse;
+}
+@keyframes floatSparkles {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+.projects-section h1,
+.projects-container {
+  position: relative;
+  z-index: 1;
+}
+.projects-section h1 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #e0f2ff;
+}
+
+/* grid */
+.projects-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+  justify-items: center;
+  align-items: start;
+}
+
+/* project card */
+.project-card {
+  position: relative;
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.18);
+  transition: transform 0.36s ease, box-shadow 0.36s ease;
+  width: 100%;
+  max-width: 360px;
+}
+.project-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 255, 255, 0.18);
+}
+
+/* slider */
+.project-slider {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+}
+.project-slider img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.project-slider img.active {
+  opacity: 1;
+}
+
+/* info box */
+.project-info {
+  padding: 18px;
+  text-align: left;
+}
+.project-info h3 {
+  font-size: 1.25rem;
+  color: #1d3557;
+  margin-bottom: 8px;
+}
+.project-info p {
+  color: #333;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* links */
+.project-links {
+  margin-top: 12px;
+}
+.project-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1d3557;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+.project-links a:hover {
+  background: #00ffff;
+  color: #000;
+  transform: scale(1.03);
+}
+
+/* === CONTACT SECTION === */
+.contact-section {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+  padding: 60px var(--container-padding);
+}
+#particlesCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background: linear-gradient(135deg, #9ec7f0, #111a3d);
+  pointer-events: none;
+}
+
+/* contact card */
+.contact-card {
+  background: rgba(255, 255, 255, 0.92);
+  width: 100%;
+  max-width: 600px;
+  padding: 32px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 1;
+  backdrop-filter: blur(8px);
+}
+.contact-card h2 {
+  font-size: 1.6rem;
+  color: #1d3557;
+  margin: 0 0 4px 0;
+}
+.contact-text {
+  font-size: 0.95rem;
+  color: #333;
+  line-height: 1.45;
+}
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  outline: none;
+  font-family: var(--font-main);
+  transition: border-color 0.18s ease;
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #1d3557;
+}
+.contact-form button {
+  background: #1d3557;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+.contact-form button:hover {
+  background: #457b9d;
+  transform: translateY(-1px);
+}
+
+/* social icons */
+.social-icons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 8px;
+}
+.social-icons a {
+  color: #1d3557;
+  font-size: 1.25rem;
+  transition: transform 0.18s ease, color 0.18s ease;
+}
+.social-icons a:hover {
+  color: #e63946;
+  transform: scale(1.12);
+}
+.form-status {
+  margin-top: 8px;
+  color: #00ffff; /* neon blue */
+  font-size: 0.95rem;
+  text-align: center;
+  transition: opacity 0.3s ease;
+}
+
+/* === TOOLS / CARDS SECTION === */
+.tools-section {
+  position: relative;
+  padding: 60px var(--container-padding);
+  color: #fff;
+  min-height: 100vh;
+  background-image: url("circuit-bg.png");
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+.tools-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 11, 26, 0.28);
+  z-index: 1;
+  pointer-events: none;
+}
+.tools-section h1,
+.tools-section p,
+.tools-container {
+  position: relative;
+  z-index: 2;
+}
+
+.tools-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  z-index: 2;
+}
+.tool-card {
+  width: 130px;
+  height: 130px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  backdrop-filter: blur(8px);
+}
+.tool-card img {
+  max-width: 60%;
+  max-height: 60%;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.18s ease;
+}
+.tool-card:hover img {
+  transform: scale(1.08);
+}
+.tool-card p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #fff;
+}
+
+/* === SMALL SCREEN ADJUSTMENTS (Mobile-first improvements) ===
+   - reduce animation intensity on small screens
+   - stack horizontal layouts vertically
+   ======================================================= */
+@media (max-width: 1024px) {
+  :root {
+    --container-padding: 18px;
+  }
+
+  .logo img {
+    width: 86px;
+  }
+  .sweep-text {
+    font-size: 22px;
+  }
+  .skills-heading {
+    font-size: 2.1rem;
+  }
+
+  .project-info h3 {
+    font-size: 1.2rem;
+  }
+}
+
+/* Tablet / small laptop */
+@media (max-width: 900px) {
+  :root {
+    --container-padding: 16px;
+  }
+  .hero {
+    height: 86vh;
+  }
+
+  /* Road & car smaller */
+  .road {
+    top: -40px;
+    height: 36px;
+  }
+  .road-car {
+    width: 55px;
+    bottom: 10px;
+  }
+  .pin {
+    top: -44px;
+  }
+  .description-box {
+    margin-top: 64px;
+    font-size: 15px;
+    padding: 14px 20px;
+  }
+
+  /* About stacks */
+  .about-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .about-left,
+  .about-right {
+    width: 100%;
+    padding: 12px;
+  }
+
+  /* Projects grid: 1 or 2 columns */
+  .projects-container {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .project-slider {
+    height: 200px;
+  }
+  .project-card {
+    max-width: 90%;
+  }
+
+  .tools-section {
+    padding: 40px var(--container-padding);
+  }
+  .tool-card {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 600px) {
+  :root {
+    --container-padding: 14px;
+  }
+
+  /* hero sizing + readability tweaks */
+  .logo img {
+    width: 70px;
+  }
+  .sweep-text {
+    font-size: 18px;
+  }
+  .hero {
+    height: 78vh;
+    min-height: 560px;
+  }
+
+  /* Roadmap becomes scrollable horizontally if necessary */
+  .work-roadmap {
+    padding: 30px 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .road {
+    width: 95%;
+    top: -30px;
+  }
+
+  .road-car {
+    width: 46px;
+    bottom: 8px;
+    transition: transform 450ms cubic-bezier(.22, .8, .33, 1);
+  }
+  .pin {
+    top: -36px;
+  }
+
+  /* Description box smaller */
+  .description-box {
+    width: 96%;
+    margin-top: 48px;
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+
+  /* Skills — reduce heavy glows & sizes */
+  .bracket {
+    font-size: 4.8rem;
+    filter: drop-shadow(0 0 8px #0ff);
+  }
+  .skills-container {
+    gap: 18px;
+  }
+  .skill {
+    font-size: 1.6rem;
+  }
+  .skill i {
+    font-size: 2.2rem;
+  }
+
+  /* Projects */
+  .projects-section {
+    padding: 40px 12px;
+  }
+  .project-slider {
+    height: 180px;
+  }
+
+  /* Contact card smaller */
+  .contact-card {
+    padding: 20px;
+    max-width: 92%;
+    height: auto;
+  }
+
+  /* Tools cards smaller & stack */
+  .tools-container {
+    gap: 12px;
+  }
+  .tool-card {
+    width: 100px;
+    height: 100px;
+  }
+
+  /* Reduce heavy blurs for perf on mobile */
+  .skills-section::before,
+  .skills-section::after {
+    filter: blur(80px);
+    width: 200px;
+    height: 200px;
+  }
+  .projects-section::before {
+    filter: blur(40px);
+  }
+
+  /* Slightly reduce hover/transform intensity on mobile (touch) */
+  .skill:hover,
+  .project-card:hover,
+  .tool-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 420px) {
+  .sweep-text {
+    font-size: 16px;
+  }
+  .bracket {
+    font-size: 4rem;
+  }
+  .skill {
+    font-size: 1.45rem;
+  }
+  .project-info h3 {
+    font-size: 1.1rem;
+  }
+  .contact-card {
+    padding: 16px;
+  }
+}
+
+/* === PERFORMANCE & ACCESSIBILITY ===
+   - prefers-reduced-motion
+   - reduce heavy effects on mobile and for low-end devices
+   ======================================================= */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hero-arrow,
+  .sweep-text,
+  .projects-section::before,
+  .skills-section::before,
+  .skills-section::after {
+    animation: none !important;
+  }
+  .skill:hover,
+  .project-card:hover,
+  .tool-card:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+}
+
+/* === MINOR HELPERS === */
+.visually-hidden {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
+/* ensure images don't overflow their containers */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* keep buttons and interactive elements accessible focus states */
+:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* === TOOLS BACKGROUND + CARD CENTERING === */
+.tools-section {
+  /* restore gentle circuit movement (same as original intent) */
+  animation: moveCircuit 40s linear infinite alternate;
+  background-image: url("circuit-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* keep the overlay for contrast */
+.tools-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 11, 26, 0.45);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* keyframes (ensure present) */
+@keyframes moveCircuit {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 50% 100%;
+  }
+  100% {
+    background-position: 100% 0%;
+  }
+}
+
+/* Force tool-card text & icon to center precisely */
+.tools-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* center the cards themselves */
+  gap: 20px;
+}
+.tool-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* Ensure paragraph inside tool-card is centered */
+.tool-card p {
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  line-height: 1.15;
+  font-size: 0.95rem;
+}
+
+/* Also ensure skill labels centered on all sizes */
+.skill p {
+  margin: 0;
+  text-align: center;
+}
+
+/* Minor mobile tweak: reduce overlay darkness so circuit is visible on small screens */
+@media (max-width: 600px) {
+  .tools-section::after {
+    background: rgba(6, 11, 26, 0.22);
+  }
+}
+
+/* Center "Tools I Use" heading & paragraph */
+.tools-section h1,
+.tools-section p {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+/* For extra safety on small screens */
+@media (max-width: 768px) {
+  .tools-section h1 {
+    font-size: 1.8rem;
+  }
+  .tools-section p {
+    font-size: 0.95rem;
+    max-width: 90%;
+    margin-inline: auto;
+  }
+}
+
+/* === REMOVE BLUE FOCUS BOX ON MOUSE CLICK === */
+/* Disable outlines & shadows for mouse interactions */
+button:focus,
+button:active,
+a:focus,
+a:active,
+.pin:focus,
+.pin:active,
+.skill:focus,
+.skill:active,
+.tool-card:focus,
+.tool-card:active,
+.hero-arrow:focus,
+.hero-arrow:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Keep accessibility for keyboard navigation */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* === SCROLLBAR FIX === */
+html,
+body {
+  overflow-x: hidden;
+}
+
+/* Prevent any animated elements from triggering scrollbars */
+.hero,
+.work-roadmap,
+.skills-section,
+.projects-section,
+.tools-section,
+.contact-section {
+  overflow-x: hidden;
+}
+
+/* Optional: hide browser scrollbar track (purely visual, not functional) */
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* === FINAL FOCUS CLEANUP === */
+/* Remove blue outline/box from all interactive elements on click */
+a:focus,
+a:active,
+.hero-arrow:focus,
+.hero-arrow:active,
+svg:focus,
+svg:active {
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-focus-ring-color: transparent !important;
+}
+
+/* Keep a nice cyan glow when using keyboard (Tab navigation) */
+:focus-visible {
+  outline: 2px solid var(--color-accent) !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 8px var(--color-accent);
+  border-radius: 6px;
+}
+
+/* Fix: remove blue box on up-arrow click */
+.goto-arrow,
+.goto-arrow svg,
+.goto-arrow:focus,
+.goto-arrow:active,
+.goto-arrow:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-focus-ring-color: transparent !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Keep glow only for keyboard users */
+.goto-arrow:focus-visible {
+  outline: 2px solid var(--color-accent) !important;
+  outline-offset: 4px !important;
+  box-shadow: 0 0 10px var(--color-accent);
+  border-radius: 50%;
+}
+
+/* Completely disable all scrolling (desktop + mobile) */
+html, body {
+  overflow: hidden !important;
+  height: 100%;
+  touch-action: none;           /* blocks swipe scroll on mobile */
+  overscroll-behavior: none;    /* stops elastic bounce scroll */
+  position: fixed;              /* prevents page movement */
+  width: 100%;
+}
+
+/* === HERO RESPONSIVE FIX (for mobile when scroll is locked) === */
+@media (max-width: 768px) {
+  .hero {
+    height: 100vh;
+    overflow: visible !important;   /* allow text to show fully inside hero */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .hero .floating-text {
+    white-space: normal;
+    word-wrap: break-word;
+    max-width: 90%;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .hero video {
+    object-fit: cover;
+  }
+}
+
+/* === ABOUT SUBTITLE === */
+.about-subtitle {
+  font-family: 'Anta', sans-serif;
+  font-size: 1.6rem;
+  color: #22e3ff;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 25px;
+  letter-spacing: 1px;
+}
+
+.about-subtitle span {
+  color: #06e711;        /* accent for key words */
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .about-subtitle {
+    font-size: 1.2rem;
+    line-height: 1.4;
+    padding: 0 10px;
+  }
+}
